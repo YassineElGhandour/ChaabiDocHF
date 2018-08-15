@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ChaabiDocHFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Armoire">
+    <Key>
+      <PropertyRef Name="idArmoire" />
+    </Key>
+    <Property Name="idArmoire" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codeArmoire" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Boite">
+    <Key>
+      <PropertyRef Name="idBoite" />
+    </Key>
+    <Property Name="idBoite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idArmoire" Type="int" Nullable="false" />
+    <Property Name="codeBoite" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Branche">
+    <Key>
+      <PropertyRef Name="idBranche" />
+    </Key>
+    <Property Name="idBranche" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codeBranche" Type="varchar" MaxLength="254" />
+    <Property Name="nbrBranche" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="idDossier" />
+    </Key>
+    <Property Name="idDossier" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idBoite" Type="int" Nullable="false" />
+    <Property Name="idProduit" Type="int" Nullable="false" />
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="codeDossier" Type="varchar" MaxLength="254" />
+    <Property Name="nomDossier" Type="varchar" MaxLength="254" />
+    <Property Name="dateCreation" Type="datetime" />
+    <Property Name="dureeLegale" Type="varchar" MaxLength="254" />
+    <Property Name="dureeConv" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Motif">
+    <Key>
+      <PropertyRef Name="idMotif" />
+    </Key>
+    <Property Name="idMotif" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomMotif" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Mouvement">
+    <Key>
+      <PropertyRef Name="idMvnt" />
+    </Key>
+    <Property Name="idMvnt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="idDossier" Type="int" Nullable="false" />
+    <Property Name="idMotif" Type="int" Nullable="false" />
+    <Property Name="dateRest" Type="datetime" />
+    <Property Name="dateMvnt" Type="datetime" />
+    <Property Name="numCont" Type="varchar" MaxLength="254" />
+    <Property Name="isValid" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Produit">
+    <Key>
+      <PropertyRef Name="idProduit" />
+    </Key>
+    <Property Name="idProduit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomProduit" Type="varchar" MaxLength="254" />
+    <Property Name="descProduit" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="idRole" />
+    </Key>
+    <Property Name="idRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomRole" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="idUser" />
+      <PropertyRef Name="idRole" />
+    </Key>
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="idRole" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Utilisateur">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idBranche" Type="int" Nullable="false" />
+    <Property Name="matriculeUser" Type="varchar" MaxLength="254" />
+    <Property Name="nomUser" Type="varchar" MaxLength="254" />
+    <Property Name="prenomUser" Type="varchar" MaxLength="254" />
+    <Property Name="adresseUser" Type="varchar" MaxLength="254" />
+    <Property Name="sexeUser" Type="varchar" MaxLength="254" />
+    <Property Name="cinUser" Type="varchar" MaxLength="254" />
+    <Property Name="mdpUser" Type="varchar" MaxLength="254" />
+    <Property Name="rememberMeUser" Type="bit" />
+    <Property Name="isActiveUser" Type="bit" />
+    <Property Name="emailUser" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <Association Name="FK_BOITE_RANGER_ARMOIRE">
+    <End Role="Armoire" Type="Self.Armoire" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Boite" Type="Self.Boite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Armoire">
+        <PropertyRef Name="idArmoire" />
+      </Principal>
+      <Dependent Role="Boite">
+        <PropertyRef Name="idArmoire" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOSSIER_DECRIRE_PRODUIT">
+    <End Role="Produit" Type="Self.Produit" Multiplicity="1" />
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produit">
+        <PropertyRef Name="idProduit" />
+      </Principal>
+      <Dependent Role="Dossier">
+        <PropertyRef Name="idProduit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOSSIER_GERE_UTILISAT">
+    <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Dossier">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOSSIER_SECLASSIF_BOITE">
+    <End Role="Boite" Type="Self.Boite" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Boite">
+        <PropertyRef Name="idBoite" />
+      </Principal>
+      <Dependent Role="Dossier">
+        <PropertyRef Name="idBoite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOUVEMEN_EFFECTUE_DOSSIER">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Mouvement" Type="Self.Mouvement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="idDossier" />
+      </Principal>
+      <Dependent Role="Mouvement">
+        <PropertyRef Name="idDossier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOUVEMEN_FAIRE_MOTIF">
+    <End Role="Motif" Type="Self.Motif" Multiplicity="1" />
+    <End Role="Mouvement" Type="Self.Mouvement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Motif">
+        <PropertyRef Name="idMotif" />
+      </Principal>
+      <Dependent Role="Mouvement">
+        <PropertyRef Name="idMotif" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOUVEMEN_PASSE_UTILISAT">
+    <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+    <End Role="Mouvement" Type="Self.Mouvement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Mouvement">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERROLE_USERROLES_ROLE">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="idRole" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="idRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERROLE_USERROLES_UTILISAT">
+    <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UTILISAT_APPARTENI_BRANCHE">
+    <End Role="Branche" Type="Self.Branche" Multiplicity="1" />
+    <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branche">
+        <PropertyRef Name="idBranche" />
+      </Principal>
+      <Dependent Role="Utilisateur">
+        <PropertyRef Name="idBranche" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ChaabiDocHFModelStoreContainer">
+    <EntitySet Name="Armoire" EntityType="Self.Armoire" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Boite" EntityType="Self.Boite" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Branche" EntityType="Self.Branche" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier" EntityType="Self.Dossier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Motif" EntityType="Self.Motif" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mouvement" EntityType="Self.Mouvement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produit" EntityType="Self.Produit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BOITE_RANGER_ARMOIRE" Association="Self.FK_BOITE_RANGER_ARMOIRE">
+      <End Role="Armoire" EntitySet="Armoire" />
+      <End Role="Boite" EntitySet="Boite" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOSSIER_DECRIRE_PRODUIT" Association="Self.FK_DOSSIER_DECRIRE_PRODUIT">
+      <End Role="Produit" EntitySet="Produit" />
+      <End Role="Dossier" EntitySet="Dossier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOSSIER_GERE_UTILISAT" Association="Self.FK_DOSSIER_GERE_UTILISAT">
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+      <End Role="Dossier" EntitySet="Dossier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOSSIER_SECLASSIF_BOITE" Association="Self.FK_DOSSIER_SECLASSIF_BOITE">
+      <End Role="Boite" EntitySet="Boite" />
+      <End Role="Dossier" EntitySet="Dossier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOUVEMEN_EFFECTUE_DOSSIER" Association="Self.FK_MOUVEMEN_EFFECTUE_DOSSIER">
+      <End Role="Dossier" EntitySet="Dossier" />
+      <End Role="Mouvement" EntitySet="Mouvement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOUVEMEN_FAIRE_MOTIF" Association="Self.FK_MOUVEMEN_FAIRE_MOTIF">
+      <End Role="Motif" EntitySet="Motif" />
+      <End Role="Mouvement" EntitySet="Mouvement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOUVEMEN_PASSE_UTILISAT" Association="Self.FK_MOUVEMEN_PASSE_UTILISAT">
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+      <End Role="Mouvement" EntitySet="Mouvement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERROLE_USERROLES_ROLE" Association="Self.FK_USERROLE_USERROLES_ROLE">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERROLE_USERROLES_UTILISAT" Association="Self.FK_USERROLE_USERROLES_UTILISAT">
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UTILISAT_APPARTENI_BRANCHE" Association="Self.FK_UTILISAT_APPARTENI_BRANCHE">
+      <End Role="Branche" EntitySet="Branche" />
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

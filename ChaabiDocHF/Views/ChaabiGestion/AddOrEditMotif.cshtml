@@ -1,0 +1,20 @@
+﻿@model ChaabiDocHF.Models.Motif
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEditMotif", "ChaabiGestion", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.idMotif)
+    <div class="form-group">
+        <label>Code Branche</label>
+        @Html.EditorFor(model => model.nomMotif, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.nomMotif)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <input type="reset" value="Réinitialisez" class="btn" />
+    </div>
+}

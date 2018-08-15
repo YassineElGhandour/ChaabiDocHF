@@ -1,0 +1,225 @@
+﻿@model ChaabiDocHF.Models.RegistrationView
+@using ChaabiDocHF.Models
+
+
+<div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <!--      Wizard container        -->
+                    <div class="wizard-container">
+                        <div class="card wizard-card" data-color="red" id="wizard">
+
+                            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                            {
+                                if (ViewBag.Message != null)
+                                {
+                                    <div class="alert alert-success">
+                                        <strong>Success!</strong> @ViewBag.Message
+                                    </div>
+                                    <a class="nav-link" href="@Url.Action("Registration", "Account")">
+                                        <p>Créer un autre gestionnaire</p>
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <!--        You can switch " data-color="blue" "  with one of the next bright colors: "green", "orange", "red", "purple"             -->
+
+                                    <div class="wizard-header">
+                                        <h3 class="wizard-title">
+                                            Ajout d'un Gestionnaire
+                                        </h3>
+                                    </div>
+                                    <div class="wizard-navigation">
+                                        <ul>
+                                            <li><a href="#details" data-toggle="tab">Informations</a></li>
+                                            <li><a href="#captain" data-toggle="tab">Role/Branche</a></li>
+                                            <li><a href="#description" data-toggle="tab">Mot de passe</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane" id="details">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4 class="info-text"> Informations du gestionnaire.</h4>
+                                                </div>
+                                                <div>
+                                                    @if (ViewBag.Message != null)
+                                                    {
+                                                        <div class="alert alert-danger" align="center">
+                                                            <strong>Erreur : </strong> @ViewBag.Message
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">work</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Matricule</label>
+                                                            @Html.EditorFor(model => model.matriculeUser, new { htmlAttributes = new { @class = "form-control", @minlength = "4", @maxlength = "4"} })
+                                                            @Html.ValidationMessageFor(model => model.matriculeUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">email</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Email</label>
+                                                            @Html.EditorFor(model => model.emailUser, new { htmlAttributes = new { @class = "form-control" } })
+                                                            <p>
+                                                                @Html.ValidationMessageFor(model => model.emailUser, "", new { @class = "text-danger" })
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">work</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">CIN</label>
+                                                            @Html.EditorFor(model => model.cinUser, new { htmlAttributes = new { @class = "form-control" } , @minlength = "8", @maxlength = "8" })
+                                                            @Html.ValidationMessageFor(model => model.cinUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">perm_identity</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Nom</label>
+                                                            @Html.EditorFor(model => model.nomUser, new { htmlAttributes = new { @class = "form-control" }, @minlength = "3", @maxlength = "32" })
+                                                            @Html.ValidationMessageFor(model => model.nomUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">perm_identity</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Prenom</label>
+                                                            @Html.EditorFor(model => model.prenomUser, new { htmlAttributes = new { @class = "form-control" }, @minlength = "3", @maxlength = "32" })
+                                                            @Html.ValidationMessageFor(model => model.prenomUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">location_city</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">Adresse</label>
+                                                            @Html.EditorFor(model => model.adresseUser, new { htmlAttributes = new { @class = "form-control" }, @minlength = "10", @maxlength = "200" })
+                                                            @Html.ValidationMessageFor(model => model.adresseUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="material-icons">face</i>
+                                                        </span>
+                                                        <div class="form-group label-floating">
+                                                            @Html.DropDownList("sexeUser", new SelectList(Enum.GetValues(typeof(SexeUser))), "Sexe", new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.sexeUser, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="captain">
+                                            <h4 class="info-text">Roles et Branches </h4>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="material-icons">accessibility_new</i>
+                                                            </span>
+                                                            <div class="form-group label-floating">
+                                                                <!-- Insert Roles here -->
+                                                                @Html.DropDownList("Role", null, "Select", new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.role, "", new { @class = "text-danger" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="material-icons">group</i>
+                                                            </span>
+                                                            <div class="form-group label-floating">
+                                                                @Html.DropDownListFor(model => model.idBranche, ViewBag.ListeBranche as SelectList, "Code Branche", new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.idBranche, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="description">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="material-icons">lock</i>
+                                                            </span>
+                                                            <div class="form-group label-floating">
+                                                                <label class="control-label">Mot de Passe</label>
+                                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="material-icons">lock</i>
+                                                            </span>
+                                                            <div class="form-group label-floating">
+                                                                <label class="control-label">Confirmer le mot de passe</label>
+                                                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-footer">
+                                        <div class="pull-right">
+                                            <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Next' />
+                                            <input type='submit' class='btn btn-finish btn-fill btn-danger btn-wd' name='finish' value='Validation' />
+                                        </div>
+                                        <div class="pull-left">
+                                            <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="clearfix"></div>
+                                        
+                                    </div>
+
+                                    
+
+                                }
+                            }
+                        </div>
+                    </div> <!-- wizard container -->
+                </div>
+            </div> <!-- row -->
+      

@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "~/Views/Shared/_MasterCrud.cshtml";
+}
+
+<div align="right">
+    <a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddOrEditRole","ChaabiGestion")')"><i class="fa fa-plus"></i> Ajouter un role</a>
+</div>
+<table id="roleTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID Role</th>
+            <th>Nom Role</th>
+        </tr>
+    </thead>
+</table>
+
+@section mastercrudjs
+{
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+
+            dataTable = $("#roleTable").DataTable({
+                "ajax": {
+                    "url": "/ChaabiGestion/GetRoleListe",
+                    "type": "GET",
+                    "datatype": "JSON"
+                },
+                "columns": [
+                    { "data": "idRole" },
+                    { "data": "nomRole" },
+                ],
+                "language": {
+
+                    "emptyTable" : "Aucun résultat trouvé"
+                }
+            });
+        });
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Gérer le role',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if($(form).valid()){
+                $.ajax({
+                    type : "POST",
+                    url : form.action,
+                    data : $(form).serialize(),
+                    success : function (data) {
+                        if(data.success)
+                        {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message,{
+                                globalPosition :"top center",
+                                className : "success"
+                            })
+
+                        }
+                        if (!data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
+
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if(confirm('Voulez vous vraiement supprimer ce rôle ?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteRole", "ChaabiGestion")/' + id,
+                    success: function (data) {
+                        if (data.success)
+                        {
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+
+                        }
+                    }
+
+                });
+            }
+        }
+    </script>
+}

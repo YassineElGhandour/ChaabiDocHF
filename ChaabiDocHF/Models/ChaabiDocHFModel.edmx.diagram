@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="14282066877148bf87ae84b3df16243e" Name="Diagram1">
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Armoire" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Boite" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Branche" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Dossier" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Motif" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Mouvement" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Produit" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Role" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ChaabiDocHFModel.Utilisateur" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_BOITE_RANGER_ARMOIRE" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_DOSSIER_SECLASSIF_BOITE" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_UTILISAT_APPARTENI_BRANCHE" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_DOSSIER_DECRIRE_PRODUIT" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_DOSSIER_GERE_UTILISAT" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_MOUVEMEN_EFFECTUE_DOSSIER" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_MOUVEMEN_FAIRE_MOTIF" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.FK_MOUVEMEN_PASSE_UTILISAT" ManuallyRouted="false" />
+        <AssociationConnector Association="ChaabiDocHFModel.UserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

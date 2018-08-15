@@ -1,0 +1,16 @@
+﻿
+@using ChaabiDocHF.CustomAuthentication
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <a href="javascript:document.getElementById('logoutForm').submit()" class="made-with-mk">
+            <div class="brand">
+                LO
+            </div>
+            <div class="made-with"><strong>Se déconnecter</strong></div>
+        </a>
+    }
+}

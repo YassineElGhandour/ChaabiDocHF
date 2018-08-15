@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/_MasterCrud.cshtml";
+}
+
+<div align="right">
+    <a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddOrEditBoite","ChaabiGestion")')"><i class="fa fa-plus"></i> Ajouter une boîte</a>
+</div>
+<table id="boiteTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID Boite</th>
+            <th>Code Boite</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section mastercrudjs
+{
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+
+            dataTable = $("#boiteTable").DataTable({
+                "ajax": {
+                    "url": "/ChaabiGestion/GetBoiteListe",
+                    "type": "GET",
+                    "datatype": "JSON"
+                },
+                "columns": [
+                    { "data": "idBoite" },
+                    { "data": "codeBoite" },
+                    {"data":"idBoite" , "render" : function (data) {
+                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEditBoite", "ChaabiGestion")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                        "orderable": true,
+                        "searchable": false,
+                        "width":"150px"
+                    }
+                ],
+                "language": {
+
+                    "emptyTable" : "Aucun résultat trouvé"
+                }
+            });
+        });
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Gérer la boîte',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if($(form).valid()){
+                $.ajax({
+                    type : "POST",
+                    url : form.action,
+                    data : $(form).serialize(),
+                    success : function (data) {
+                        if(data.success)
+                        {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message,{
+                                globalPosition :"top center",
+                                className : "success"
+                            })
+                        }
+                        if (!data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if(confirm('Voulez vous vraiement supprimer cette boîte ?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteBoite", "ChaabiGestion")/' + id,
+                    success: function (data) {
+                        if (data.success)
+                        {
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+
+                        }
+                    }
+
+                });
+            }
+        }
+    </script>
+}

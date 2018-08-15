@@ -1,0 +1,92 @@
+﻿@model ChaabiDocHF.Models.LoginView
+
+@{
+    Layout = null;
+ }
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple-icon.png">
+    <link rel="icon" type="image/png" href="../images/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>FBPMC - Saisie de dossier à classer</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/now-ui-kit.css?v=1.1.0" rel="stylesheet" />
+</head>
+
+<body class="login-page sidebar-collapse">
+    <!-- End Navbar -->
+    <div class="page-header" filter-color="orange">
+        <div class="page-header-image" style="background-image:url(../images/bank-crypt.jpg)"></div>
+        <div class="container">
+            <div class="col-md-4 content-center">
+                <div class="card card-login card-plain">
+                    @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        
+                        <div class="header header-primary text-center">
+                            <div class="logo-container">
+                                <images src="../images/logo-square.jpg" alt="">
+                            </div>
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="content">
+                            <h3>Identification du gestionnaire</h3>
+                            <br />
+                            <div><h9>Matricule</h9></div>
+                            <div class="input-group form-group-no-border input-lg">
+                                <span class="input-group-addon">
+                                    <i class="now-ui-icons users_circle-08"></i>
+                                </span>
+                                @Html.TextBoxFor(m => m.matriculeUser, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.matriculeUser, "", new { @class = "text-danger" })
+                            </div>
+                            <div><h9>Mot de passe</h9></div>
+                            <div class="input-group form-group-no-border input-lg">
+                                <span class="input-group-addon">
+                                    <i class="now-ui-icons loader_gear"></i>
+                                </span>
+                                @Html.PasswordFor(m => m.mdpUser, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.mdpUser, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="footer text-center">
+                            <input type="submit" class="btn btn-primary btn-round btn-lg btn-block" value="Validation" class="btn btn-default" />
+                        </div>
+
+                        <div class="pull-right">
+                            <h12>
+                                @*
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                                    *@
+                            </h12>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
+<!--   Core JS Files   -->
+<script src="../Scripts/core/jquery.3.3.1.min.js" type="text/javascript"></script>
+<script src="../Scripts/core/popper.min.js" type="text/javascript"></script>
+<script src="../Scripts/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="../Scripts/plugins/bootstrap-switch.js"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="../Scripts/plugins/nouislider.min.js" type="text/javascript"></script>
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="../Scripts/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+<script src="../Scripts/now-ui-kit.js?v=1.1.0" type="text/javascript"></script>

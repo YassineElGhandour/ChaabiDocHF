@@ -1,0 +1,209 @@
+﻿@model ChaabiDocHF.Models.MouvementView
+@using ChaabiDocHF.Models
+
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+            <div class="card wizard-card" data-color="red" id="wizard">
+
+                @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                {
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>
+                        </div>
+                        <a class="nav-link" href="/ChaabiDoc/Mouvement">
+                            <p>Faire un autre mouvement d'un dossier</p>
+                        </a>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="wizard-header">
+                            <h3 class="wizard-title">
+                                Effectuer un mouvement
+                            </h3>
+                        </div>
+                        <div class="wizard-navigation">
+                            <ul>
+                                <li><a href="#mouvement" data-toggle="tab">Mouvement</a></li>
+                                <li><a href="#dates" data-toggle="tab">Dates et Durées</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane" id="mouvement">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">work</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Code Dossier</label>
+                                                @Html.DropDownListFor(model => model.idDossier, ViewBag.ListeDossiers as SelectList, " ", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.idDossier, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">work</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Motif de Mouvement</label>
+                                                @Html.DropDownListFor(model => model.idMotif, ViewBag.ListeMotifs as SelectList, "", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.idMotif, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">work</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Numéro du conteneur</label>
+                                                @Html.EditorFor(model => model.numCont, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.numCont, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">work</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Code Boite</label>
+                                                @Html.DropDownListFor(model => model.idBoite, new SelectList(""), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">work</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Code Armoire</label>
+                                                @Html.DropDownListFor(model => model.idArmoire, new SelectList(" "), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="dates">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Date de Restitution</label>
+                                                @Html.EditorFor(model => model.dateRest, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.dateRest, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Date de Mouvement</label>
+                                                @Html.EditorFor(model => model.dateMvnt, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.dateMvnt, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Date de Création</label>
+                                                @Html.DropDownListFor(model => model.idDateCreation, new SelectList(""), new { @class = "form-control" })
+                                           </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label>Date conventionelle</label>
+                                                @Html.DropDownListFor(model => model.idDureeConv, new SelectList(""), new { @class = "form-control" })
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wizard-footer">
+                            <div class="pull-right">
+                                <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Next' />
+                                <input type='submit' class='btn btn-finish btn-fill btn-danger btn-wd' name='finish' value='Validation' id="btnSubmit" />
+                            </div>
+                            <div class="pull-left">
+                                <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
+
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Echec de mouvement : </strong> @ViewBag.Message
+                            </div>
+                        }
+
+                    }
+                }
+            </div>
+        </div> <!-- wizard container -->
+    </div>
+</div> <!-- row -->
+
+@section masterjs
+{
+    <script>
+        $(document).ready(function () {
+            $("#idDossier").change(function () {
+                $.get("/ChaabiDoc/GetBoiteListe", { idDossier: $("#idDossier").val() }, function (data) {
+                    $("#idBoite").empty();
+                    $.each(data, function (mouvement, row) {
+                        $("#idBoite").append("<option value ='" + row.idBoite + "'>" + row.codeBoite + "</option>")
+                    });
+                });
+
+                $.get("/ChaabiDoc/GetArmoireListe", { idDossier: $("#idDossier").val() }, function (data) {
+                    $("#idArmoire").empty();
+                    $.each(data, function (mouvement, row) {
+                        $("#idArmoire").append("<option value ='" + row.idArmoire + "'>" + row.codeArmoire + "</option>")
+                    });
+                });
+                
+                $.get("/ChaabiDoc/GetDossierListe", { idDossier: $("#idDossier").val() }, function (data) {
+                    $("#idDateCreation").empty();
+                    $.each(data, function (mouvement, row) {
+                        $("#idDateCreation").append("<option value ='" + 1 + "'>" + row.dateCreation + "</option>")
+                    });
+                });
+
+                $.get("/ChaabiDoc/GetDossierListe", { idDossier: $("#idDossier").val() }, function (data) {
+                    $("#idDureeConv").empty();
+                    $.each(data, function (mouvement, row) {
+                        $("#idDureeConv").append("<option value ='" + 1 + "'>" + row.dureeConv + "</option>")
+                    });
+                });
+            })
+        });
+    </script>
+}

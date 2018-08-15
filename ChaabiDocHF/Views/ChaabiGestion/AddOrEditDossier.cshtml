@@ -1,0 +1,55 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "AddOrEditDossier";
+    Layout = "~/Views/Shared/_MasterCrud.cshtml";
+}
+
+<h2>AddOrEditDossier</h2>
+
+@model ChaabiDocHF.Models.Dossier
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEditDossier", "ChaabiGestion", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.idDossier)
+    @Html.HiddenFor(model => model.idUser)
+    <div class="form-group">
+        <label>Code Dossier</label>
+        @Html.EditorFor(model => model.codeDossier, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.codeDossier)
+    </div>
+    <div class="form-group">
+        <label>Code Produit</label>
+        @Html.DropDownListFor(model => model.idProduit, ViewBag.ListeProduits as SelectList, " ", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.idProduit, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Code Boîte</label>
+        @Html.DropDownListFor(model => model.idBoite, ViewBag.ListeBoites as SelectList, " ", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.idBoite, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Date Création</label>
+        @Html.EditorFor(model => model.dateCreation, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.dateCreation)
+    </div>
+    <div class="form-group">
+        <label>Durée Légale</label>
+        @Html.EditorFor(model => model.dureeLegale, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.dureeLegale)
+    </div>
+    <div class="form-group">
+        <label>Durée Conventionelle</label>
+        @Html.EditorFor(model => model.dureeConv, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.dureeConv)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <input type="reset" value="Réinitialisez" class="btn" />
+    </div>
+}

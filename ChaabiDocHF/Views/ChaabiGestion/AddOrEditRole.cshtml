@@ -1,0 +1,20 @@
+﻿@model ChaabiDocHF.Models.Role
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEditRole", "ChaabiGestion", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.idRole)
+    <div class="form-group">
+        <label>Code Branche</label>
+        @Html.EditorFor(model => model.nomRole, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.nomRole)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <input type="reset" value="Réinitialisez" class="btn" />
+    </div>
+}

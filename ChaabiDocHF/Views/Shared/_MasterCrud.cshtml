@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FBPMC - Editique</title>
+    <link rel="icon" type="image/png" href="../images/favicon.ico" />
+    <link href="~/Content/Site-simple.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-simple.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/dashboard.css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Editique", "ChaabiDoc")">Gestion du Classement et de saisie des dossiers</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink(" Création ", "Creation", "ChaabiDoc")</li>
+                    <li>@Html.ActionLink(" Mouvement ", "Mouvement", "ChaabiDoc")</li>
+                    <li><a href="#">Aide</a></li>
+                    <li>@Html.ActionLink("Se déconnecter", "LogOut", "Account")</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li>@Html.ActionLink("Editique", "Editique", "ChaabiDoc")</li>
+                <li>@Html.ActionLink("Les Produits", "LesProduits", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Dossiers", "LesDossiers", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Roles", "LesRoles", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Branches", "LesBranches", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Boîtes", "LesBoites", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Armoires", "LesArmoires", "ChaabiGestion")</li>
+                <li>@Html.ActionLink("Les Motifs", "LesMotifs", "ChaabiGestion")</li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="table-responsive">
+                @RenderBody()
+            </div>
+        </div>
+     </div>
+
+     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+     <script src="~/Scripts/bootstrap-simple.min.js"></script>
+     <script src="~/Scripts/jquery.validate.min.js"></script>
+     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+     <script src="~/Scripts/notify.min.js"></script>
+
+     <script src="~/Scripts/jquery.dataTables.min.js"></script>
+     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+      @RenderSection("mastercrudjs", required: false)
+
+</body>
+</html>

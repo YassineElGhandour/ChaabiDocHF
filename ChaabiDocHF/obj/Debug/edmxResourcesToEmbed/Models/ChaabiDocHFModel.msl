@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ChaabiDocHFModelStoreContainer" CdmEntityContainer="ChaabiDocHFEntities">
+    <EntitySetMapping Name="Armoires">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Armoire">
+        <MappingFragment StoreEntitySet="Armoire">
+          <ScalarProperty Name="idArmoire" ColumnName="idArmoire" />
+          <ScalarProperty Name="codeArmoire" ColumnName="codeArmoire" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Boites">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Boite">
+        <MappingFragment StoreEntitySet="Boite">
+          <ScalarProperty Name="idBoite" ColumnName="idBoite" />
+          <ScalarProperty Name="idArmoire" ColumnName="idArmoire" />
+          <ScalarProperty Name="codeBoite" ColumnName="codeBoite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Branche">
+        <MappingFragment StoreEntitySet="Branche">
+          <ScalarProperty Name="idBranche" ColumnName="idBranche" />
+          <ScalarProperty Name="codeBranche" ColumnName="codeBranche" />
+          <ScalarProperty Name="nbrBranche" ColumnName="nbrBranche" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dossiers">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Dossier">
+        <MappingFragment StoreEntitySet="Dossier">
+          <ScalarProperty Name="idDossier" ColumnName="idDossier" />
+          <ScalarProperty Name="idBoite" ColumnName="idBoite" />
+          <ScalarProperty Name="idProduit" ColumnName="idProduit" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="codeDossier" ColumnName="codeDossier" />
+          <ScalarProperty Name="nomDossier" ColumnName="nomDossier" />
+          <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+          <ScalarProperty Name="dureeLegale" ColumnName="dureeLegale" />
+          <ScalarProperty Name="dureeConv" ColumnName="dureeConv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Motifs">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Motif">
+        <MappingFragment StoreEntitySet="Motif">
+          <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+          <ScalarProperty Name="nomMotif" ColumnName="nomMotif" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mouvements">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Mouvement">
+        <MappingFragment StoreEntitySet="Mouvement">
+          <ScalarProperty Name="idMvnt" ColumnName="idMvnt" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idDossier" ColumnName="idDossier" />
+          <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+          <ScalarProperty Name="dateRest" ColumnName="dateRest" />
+          <ScalarProperty Name="dateMvnt" ColumnName="dateMvnt" />
+          <ScalarProperty Name="numCont" ColumnName="numCont" />
+          <ScalarProperty Name="isValid" ColumnName="isValid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produits">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Produit">
+        <MappingFragment StoreEntitySet="Produit">
+          <ScalarProperty Name="idProduit" ColumnName="idProduit" />
+          <ScalarProperty Name="nomProduit" ColumnName="nomProduit" />
+          <ScalarProperty Name="descProduit" ColumnName="descProduit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="idRole" ColumnName="idRole" />
+          <ScalarProperty Name="nomRole" ColumnName="nomRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Utilisateurs">
+      <EntityTypeMapping TypeName="ChaabiDocHFModel.Utilisateur">
+        <MappingFragment StoreEntitySet="Utilisateur">
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idBranche" ColumnName="idBranche" />
+          <ScalarProperty Name="matriculeUser" ColumnName="matriculeUser" />
+          <ScalarProperty Name="nomUser" ColumnName="nomUser" />
+          <ScalarProperty Name="prenomUser" ColumnName="prenomUser" />
+          <ScalarProperty Name="adresseUser" ColumnName="adresseUser" />
+          <ScalarProperty Name="sexeUser" ColumnName="sexeUser" />
+          <ScalarProperty Name="cinUser" ColumnName="cinUser" />
+          <ScalarProperty Name="mdpUser" ColumnName="mdpUser" />
+          <ScalarProperty Name="rememberMeUser" ColumnName="rememberMeUser" />
+          <ScalarProperty Name="isActiveUser" ColumnName="isActiveUser" />
+          <ScalarProperty Name="emailUser" ColumnName="emailUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserRoles" TypeName="ChaabiDocHFModel.UserRoles" StoreEntitySet="UserRoles">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="idRole" ColumnName="idRole" />
+      </EndProperty>
+      <EndProperty Name="Utilisateur">
+        <ScalarProperty Name="idUser" ColumnName="idUser" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

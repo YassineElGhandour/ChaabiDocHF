@@ -1,0 +1,25 @@
+﻿@model ChaabiDocHF.Models.Boite
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEditBoite", "ChaabiGestion", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.idBoite)
+    <div class="form-group">
+        <label>Code Boite</label>
+        @Html.EditorFor(model => model.codeBoite, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.codeBoite)
+    </div>
+    <div class="form-group">
+        <label>Armoire</label>
+        @Html.DropDownListFor(model => model.idArmoire, ViewBag.ListeArmoires as SelectList, " ", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.idArmoire, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <input type="reset" value="Réinitialisez" class="btn" />
+    </div>
+}

@@ -1,0 +1,25 @@
+﻿@model ChaabiDocHF.Models.Branche
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEditBranche", "ChaabiGestion", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.idBranche)
+    <div class="form-group">
+        <label>Code Branche</label>
+        @Html.EditorFor(model => model.codeBranche, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.codeBranche)
+    </div>
+    <div class="form-group">
+        <label>Nombre de Branche</label>
+        @Html.EditorFor(model => model.nbrBranche, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.nbrBranche)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <input type="reset" value="Réinitialisez" class="btn" />
+    </div>
+}

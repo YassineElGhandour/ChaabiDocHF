@@ -1,0 +1,211 @@
+﻿@model IEnumerable<ChaabiDocHF.Models.Mouvement>
+
+@{
+    ViewBag.Title = "Editique";
+    Layout = "~/Views/Shared/_MasterCrud.cshtml";
+}
+
+
+<table class="table datatable table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Gestionnaire
+            </th>
+            <th>
+                Code Dossier
+            </th>
+            <th>
+                Date de Création
+            </th>
+            <th>
+                Code Boite
+            </th>
+            <th>
+                Code Armoire
+            </th>
+            <th>
+                Motif de mouvement
+            </th>
+            <th>
+                Date Mouvement
+            </th>
+            <th>
+                Date Restitution
+            </th>
+            <th>
+                Numéro conteneur
+            </th>
+            <th>
+                Validité
+            </th>
+            <th style="column-width: 200px">Actions</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utilisateur.FullUserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dossier.codeDossier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dossier.dateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dossier.Boite.codeBoite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dossier.Boite.Armoire.codeArmoire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motif.nomMotif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateMvnt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateRest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numCont)
+            </td>
+            <td>
+                @if (item.isValid == true)
+                {
+                    <div>Mouvement Validé</div>
+                }
+                else
+                {
+                    <div>Mouvement Non-validé</div>
+                }
+            </td>
+            <td>
+                <a class="btn btn-default btn-sm" onclick=PopupForm('@Url.Action("AddOrEditMouvement","ChaabiDoc", new { id=item.idMvnt })')><i class='fa fa-pencil'></i> Edit</a>
+                <a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(@item.idMvnt)><i class='fa fa-trash'></i> Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                Gestionnaire
+            </th>
+            <th>
+                Code Dossier
+            </th>
+            <th>
+                Date de Création
+            </th>
+            <th>
+                Code Boite
+            </th>
+            <th>
+                Code Armoire
+            </th>
+            <th>
+                Motif de mouvement
+            </th>
+            <th>
+                Date Mouvement
+            </th>
+            <th>
+                Date Restitution
+            </th>
+            <th>
+                Numéro conteneur
+            </th>
+            <th>
+                Validité
+            </th>
+            <th>Actions</th>
+        </tr>
+    </tfoot>
+</table>
+
+
+@section mastercrudjs
+{
+    <script>
+
+        $(".datatable").DataTable();
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Modifier le mouvement',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if($(form).valid()){
+                $.ajax({
+                    type : "POST",
+                    url : form.action,
+                    data : $(form).serialize(),
+                    success : function (data) {
+                        if(data.success)
+                        {
+                            Popup.dialog('close');
+                            window.location.replace('@Url.Action("Editique", "ChaabiDoc")');
+                            //dataTable.ajax.reload();
+
+                            /*
+                            $.notify(data.message,{
+                                globalPosition :"top center",
+                                className : "success"
+                            }) */
+
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if(confirm('Voulez vous vraiement supprimer la tracibilité de ce mouvement ?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteMouvement", "ChaabiDoc")/' + id,
+                    success: function (data) {
+                        if (data.success)
+                        {
+                            window.location.replace('@Url.Action("Editique", "ChaabiDoc")');
+                            //dataTable.ajax.reload();
+
+                            /*
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                            */
+                        }
+                    }
+
+                });
+            }
+        }
+    </script>
+}

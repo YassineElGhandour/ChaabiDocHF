@@ -1,0 +1,176 @@
+﻿@model IEnumerable<ChaabiDocHF.Models.Dossier>
+
+@{
+    ViewBag.Title = "LesDossiers";
+    Layout = "~/Views/Shared/_MasterCrud.cshtml";
+}
+
+<table class="table datatable table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Gestionnaire
+            </th>
+            <th>
+                Produit
+            </th>
+            <th>
+                Code Dossier
+            </th>
+            <th>
+                Code Boite
+            </th>
+            <th>
+                Date Création
+            </th>
+            <th>
+                Durée Légale
+            </th>
+            <th>
+                Durée Conventionnelle
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Utilisateur.FullUserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produit.nomProduit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codeDossier)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Boite.codeBoite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateCreation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dureeLegale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dureeConv)
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm" onclick=PopupForm('@Url.Action("AddOrEditDossier","ChaabiDoc", new { id=item.idDossier })')><i class='fa fa-pencil'></i> Edit</a>
+                    <a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(@item.idDossier)><i class='fa fa-trash'></i> Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <th>
+                Gestionnaire
+            </th>
+            <th>
+                Produit
+            </th>
+            <th>
+                Code Dossier
+            </th>
+            <th>
+                Code Boite
+            </th>
+            <th>
+                Date Création
+            </th>
+            <th>
+                Durée Légale
+            </th>
+            <th>
+                Durée Conventionnelle
+            </th>
+            <th>Actions</th>
+        </tr>
+    </tfoot>
+</table>
+
+
+@section mastercrudjs
+{
+    <script>
+
+        $(".datatable").DataTable();
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Modifier le dossier',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if($(form).valid()){
+                $.ajax({
+                    type : "POST",
+                    url : form.action,
+                    data : $(form).serialize(),
+                    success : function (data) {
+                        if(data.success)
+                        {
+                            Popup.dialog('close');
+                            window.location.replace('@Url.Action("LesDossier", "ChaabiGestion")');
+                            //dataTable.ajax.reload();
+
+                            /*
+                            $.notify(data.message,{
+                                globalPosition :"top center",
+                                className : "success"
+                            }) */
+
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if(confirm('Voulez vous vraiement supprimer ce dossier ?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteDossier", "ChaabiGestion")/' + id,
+                    success: function (data) {
+                        if (data.success)
+                        {
+                            window.location.replace('@Url.Action("LesDossiers", "ChaabiGestion")');
+                            //dataTable.ajax.reload();
+
+                            /*
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+                            */
+                        }
+                    }
+
+                });
+            }
+        }
+    </script>
+}
